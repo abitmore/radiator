@@ -1,9 +1,9 @@
 require 'test_helper'
 
 module Radiator
-  class FollowApiTest < Radiator::Test
+  class StreamTest < Radiator::Test
     def setup
-      @api = Radiator::FollowApi.new
+      @api = Radiator::Stream.new
     end
 
     def test_method_missing
@@ -35,11 +35,17 @@ module Radiator
       end
     end
 
-    def test_get_followers
-      stub_post_follow_api_get_followers
-      response = @api.get_followers('inertia', 0, 'blog', 100)
+    def test_get_operations
+      url = 'https://steemd.steemit.com'
+      stubs = []
+      stubs << stub_request(:post, url).with(body: /get_dynamic_global_properties/).
+        to_return(status: 200, body: fixture('get_dynamic_global_properties.json'))
+      stubs << stub_request(:post, url).with(body: /get_block/).
+        to_return(status: 200, body: fixture('get_block.json'))
+  
+      skip "cannot execute an asynchronous request in tests"
+      @api.operations
       assert_equal Hashie::Mash, response.class, response.inspect
-      assert response.result
     end
   end
 end

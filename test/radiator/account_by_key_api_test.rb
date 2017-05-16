@@ -1,9 +1,9 @@
 require 'test_helper'
 
 module Radiator
-  class FollowApiTest < Radiator::Test
+  class AccountByKeyApiTest < Radiator::Test
     def setup
-      @api = Radiator::FollowApi.new
+      @api = Radiator::AccountByKeyApi.new
     end
 
     def test_method_missing
@@ -35,11 +35,10 @@ module Radiator
       end
     end
 
-    def test_get_followers
-      stub_post_follow_api_get_followers
-      response = @api.get_followers('inertia', 0, 'blog', 100)
-      assert_equal Hashie::Mash, response.class, response.inspect
-      assert response.result
+    def test_get_key_references
+      stub_post_get_key_references
+      response = @api.get_key_references(['STM71f6yWztimJuREVyyMXNqAVbx1FzPVW6LLXNoQ35dHwKuszmHX'])
+      assert_equal response.class, Hashie::Mash, response.inspect
     end
   end
 end

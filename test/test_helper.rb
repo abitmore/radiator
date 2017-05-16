@@ -16,7 +16,7 @@ require 'radiator'
 
 require 'minitest/autorun'
 
-# require 'webmock/minitest'
+require 'webmock/minitest' unless ENV["TEST_NET"] == 'true'
 require 'vcr'
 require 'yaml'
 require 'pry'
@@ -46,6 +46,7 @@ end
 
 class Radiator::Test < MiniTest::Test
   FIXTURE_PATH = 'test/fixtures'.freeze
+  LOGGER = Logger.new(nil)
   
   def stub_post_login ( & block )
     stub_login = if defined?(WebMock) && !ENV['VCR']

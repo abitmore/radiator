@@ -13,7 +13,7 @@ module Radiator
     end
 
     def test_all_respond_to
-      @api.method_names.keys.each do |key|
+      @api.method_names.each do |key|
         assert @api.respond_to?(key), "expect rpc respond to #{key}"
       end
     end
@@ -23,7 +23,7 @@ module Radiator
         skip 'This test cannot run against testnet.  It is only here to help locate newly added actions.'
       end
       
-      @api.method_names.keys.each do |key|
+      @api.method_names.each do |key|
         begin
           assert @api.send key
           fail 'did not expect method with invalid argument to execute'
@@ -38,7 +38,7 @@ module Radiator
     def test_get_tags
       stub_post_empty
       response = @api.get_tags
-      assert_equal response.class, Hashie::Mash, response.inspect
+      assert_equal Hashie::Mash, response.class, response.inspect
     end
   end
 end

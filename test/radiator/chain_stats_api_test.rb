@@ -1,9 +1,9 @@
 require 'test_helper'
 
 module Radiator
-  class FollowApiTest < Radiator::Test
+  class ChainStatsApiTest < Radiator::Test
     def setup
-      @api = Radiator::FollowApi.new
+      @api = Radiator::ChainStatsApi.new
     end
 
     def test_method_missing
@@ -35,11 +35,10 @@ module Radiator
       end
     end
 
-    def test_get_followers
-      stub_post_follow_api_get_followers
-      response = @api.get_followers('inertia', 0, 'blog', 100)
+    def test_get_stats_for_time
+      stub_post_get_stats_for_time
+      response = @api.get_stats_for_time("20161031T235959", 1000)
       assert_equal Hashie::Mash, response.class, response.inspect
-      assert response.result
     end
   end
 end
